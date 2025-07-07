@@ -35,20 +35,20 @@ A simple and powerful **subscription management system** built with **Node.js**,
 ## 📁 Project Structure
 
 subscription-tracker/
-├── controllers/ # API controllers
-│ ├── subscription.controller.js
-│ └── workflow.controller.js
-├── middleware/ # Custom middlewares
-│ ├── arcjet.middleware.js
-│ └── error.middleware.js
-├── models/ # Mongoose models
-│ └── subscription.model.js
-├── utils/ # Utility functions
-│ └── send.email.js
-├── workflows/ # Upstash workflows
-│ └── sendRemainders.js
-├── .env # Environment variables
-├── server.js # App entry point
+├── controllers/ 
+│   ├── subscription.controller.js
+│   └── workflow.controller.js
+├── middleware/ 
+│   ├── arcjet.middleware.js
+│   └── error.middleware.js
+├── models/ 
+│   └── subscription.model.js
+├── utils/
+│   └── send.email.js
+├── workflows/ 
+│   └── sendRemainders.js
+├── .env 
+├── server.js 
 └── package.json
 
 ---
@@ -70,67 +70,68 @@ subscription-tracker/
     Copy
     Edit
     npm install
- ---    
-3. **Set up environment variables**
+---    
+ 3. **Set up environment variables**
 
-  **Create a .env file in the root directory:**
-    ```bash
-      MONGODB_URI=your_mongodb_uri
-      SMTP_HOST=smtp.example.com
-      SMTP_PORT=587
-      SMTP_USER=your_email@example.com
-      SMTP_PASS=your_email_password
-      ARCJET_API_KEY=your_arcjet_key
-      UPSTASH_WORKFLOW_TOKEN=your_upstash_token
+     **Create a .env file in the root directory:**
+       ```bash
+        - MONGODB_URI=your_mongodb_uri
+        - SMTP_HOST=smtp.example.com
+        - SMTP_PORT=587
+        - SMTP_USER=your_email@example.com
+        - SMTP_PASS=your_email_password
+        - ARCJET_API_KEY=your_arcjet_key
+        - UPSTASH_WORKFLOW_TOKEN=your_upstash_token
 
 ---    
-4. **Run the server**
+ 4. **Run the server**
     ```bash
      npm run dev
 
 ---  
-#✉️ Email Reminders
-Emails are sent using Nodemailer.
-
-Reminder intervals: 7, 5, 2, and 1 day(s) before the renewal date.
-
-Triggered via Upstash Workflow using the sendRemainders function.
-
-
-#📬 Example Request – Create Subscription
-    ```bash
-      POST /api/subscription
-      Content-Type: application/json
+# ✉️ Email Reminders
+      Emails are sent using Nodemailer.
       
-      {
-        "name": "Netflix",
-        "price": 499,
-        "currency": "IND",
-        "freequency": "monthly",
-        "category": "entertainment",
-        "paymentMethod": "credit_card",
-        "startDate": "2025-01-12T00:00:00.000Z",
-        "user": "64f82bc1234abcde12345678"
-      }
+      Reminder intervals: 7, 5, 2, and 1 day(s) before the renewal date.
+      
+      Triggered via Upstash Workflow using the sendRemainders function.
+---
+
+# 📬 Example Request – Create Subscription
+       ```bash
+         POST /api/subscription
+         Content-Type: application/json
+         
+         {
+           "name": "Netflix",
+           "price": 499,
+           "currency": "IND",
+           "freequency": "monthly",
+           "category": "entertainment",
+           "paymentMethod": "credit_card",
+           "startDate": "2025-01-12T00:00:00.000Z",
+           "user": "64f82bc1234abcde12345678"
+         }
+
+   
+   # 🔐 Arcjet Protection
+   **Your middleware includes Arcjet bot detection and rate-limiting:**
+   ```bash
+         if (decision.reason.isBot) {
+         return res.status(403).json({ message: "Access denied for bots" });
+         }
+         if (decision.reason.isRateLimited) {
+         return res.status(429).json({ message: "Rate limit exceeded" });
+         }
+
+```
+
+# Some Screenshots
+![Screenshot](./images/Screenshot%20(227).png)
+![Screenshot](./images/Screenshot%20(228).png)
+![Screenshot](./images/Screenshot%20(229).png)
+![Screenshot](./images/Screenshot%20(230).png)
 
 
-#🔐 Arcjet Protection
-Your middleware includes Arcjet bot detection and rate-limiting:
-
-
-if (decision.reason.isBot) {
-return res.status(403).json({ message: "Access denied for bots" });
-}
-if (decision.reason.isRateLimited) {
-return res.status(429).json({ message: "Rate limit exceeded" });
-}
-
-
-![Screenshot](./images/screenshot%20(227).png)
-![Screenshot](./images/screenshot%20(228).png)
-![Screenshot](./images/screenshot%20(229).png)
-![Screenshot](./images/screenshot%20(230).png)
-
-
-Made with 💙 by Venkatsuresh432
+**Made with 💙 by Venkatsuresh432**
 
